@@ -7,8 +7,13 @@ package MyRunner;
 	import io.cucumber.junit.CucumberOptions;
 
 	@RunWith(Cucumber.class)
-	@CucumberOptions(features="src/test/resources1/features",
-					glue={"stepdefinitions","hooks"})	
+	@CucumberOptions(features=".//Features/Login.feature",
+					glue="stepdefinitions",
+					dryRun=false,
+					monochrome=true,
+					plugin= {"pretty",
+							"html:test-output"}
+					)
 
 	public class MyRunner {
 		

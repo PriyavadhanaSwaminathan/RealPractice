@@ -1,43 +1,47 @@
-	package stepdefinitions;
+package stepdefinitions;
 
-	import org.junit.Assert;
-	import org.openqa.selenium.WebDriver;
+import io.cucumber.java.en.*;
+import pageObjects.LoginPage;
 
-	import io.cucumber.java.en.*;
-	import pages.AmazonPage;
-	import pages.GooglePage;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.testng.Assert;
 
-	public class LoginAmazon {
-		WebDriver driver;
-		GooglePage gp;
-		AmazonPage ap;
+public class LoginAmazon {
+	public WebDriver driver;
+	public LoginPage lp;
+	
+	@Given("User launches Chrome browser")
+	public void user_launches_chrome_browser() {
+		System.setProperty("WebDriver.chrome.driver", System.getProperty("user")+"//Drivers/chrome.exe");
+		driver=new ChromeDriver();
+		driver.manage().window().maximize();
+		lp=new LoginPage(driver);
+	}
+	
+	@Given("User opens URL {string}")
+	public void user_opens_url(String url) {
+	   driver.get(url);
+	}
+
+	
+	@Given("User types the word {string} in the google search box")
+	public void user_types_the_word_in_the_google_search_box(String searchbox) {
 		
-		@Given("User types the {string} in the google search box")
-		public void user_types_the_in_the_google_search_box(String string) {
-		 GooglePage gp = new GooglePage(driver);
-		 gp.Googleenterpage("Amazon");
-		}
-		@Then("User lands to the Amazon India Page and click on the link")
-		public void user_lands_to_the_amazon_india_page_and_click_on_the_link() {
-			gp.shopOnlineAtAmazonIndia();
-		}
-		@Then("User lands to the Amazon Website and verifies as user logged to the Amazon Website or not")
-		public void user_lands_to_the_amazon_website_and_verifies_as_user_logged_to_the_amazon_website_or_not() {
-			AmazonPage ap= new AmazonPage(driver);
-			Assert.assertEquals("Hello, sign in", ap.amazonentrypage());
-		}
-		@Then("user types {string} in the search box and click on the search button")
-		public void user_types_in_the_search_box_and_click_on_the_search_button(String Amazonvalue) {
-			ap.Amazontxtarea(Amazonvalue);
-		}
-		@Then("User verifies and clicks on {string}")
-		public void user_verifies_and_clicks_on(String string) {
-		   
-		}
-		@Then("User close the browser")
-		public void user_close_the_browser() {
-		    
-		}
-	}	
-
-
+	    lp.googleSearchbox(searchbox);
+	}
+	
+	@Then("User clicks on the google search button")
+	public void user_clicks_on_the_google_search_button() {
+	    lp.googleSearchButton();
+	}
+	
+	@Then("User click on the Amazon link")
+	public void user_click_on_the_amazon_link() throws InterruptedException {
+		Thread.sleep(10);
+	   lp.amazonClick();
+	}
+}
