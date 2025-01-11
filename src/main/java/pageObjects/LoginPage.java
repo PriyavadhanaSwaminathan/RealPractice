@@ -24,7 +24,7 @@ public class LoginPage{
 		
 public LoginPage(WebDriver rdriver) {
 			
-driver=rdriver;
+this.driver=rdriver;
 			
 PageFactory.initElements(driver, this);
 		}
@@ -35,14 +35,18 @@ WebElement googlelink;
 @FindBy(xpath="//input[@value='Google Search']")
 WebElement googlesearchbutton;
 
+
 @FindBy(xpath="//span[text()='Shop online at Amazon India']")
 WebElement amazonLinkClick;
 
-public void googleSearchbox(String Amazon) {
-googlelink.sendKeys(Amazon);
+
+
+
+
+public void googleSearchbox(String amazonindia) {
+googlelink.sendKeys(amazonindia);
 List<WebElement> list= driver.findElements(By.xpath("//ul[@role='listbox']//li//div[@aria-label='amazon india']"));
 for(int i=0;i<list.size();i++) {
-	System.out.println(list.get(i).getText());
 	if(list.get(i).getText().equals("amazon india"));
 	{
 		list.get(i).click();
@@ -53,32 +57,10 @@ for(int i=0;i<list.size();i++) {
 
 
 
-
-
-public void googleSearchButton() {
-googlesearchbutton.click();
-
-
-try {
-    // Wait for element to be visible and clickable
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-    WebElement googlesearchbutton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//input[@value='Google Search']")));
-    
-    // Scroll the element into view
-    JavascriptExecutor js = (JavascriptExecutor) driver;
-    js.executeScript("arguments[0].scrollIntoView(true);", googlesearchbutton);
-    
-    // Perform double-click action
-    Actions actions = new Actions(driver);
-    actions.doubleClick(googlesearchbutton).perform();
-} catch (ElementNotInteractableException e) {
-    System.out.println("Element not interactable: " + e.getMessage());
-} catch (Exception e1) {
-    System.out.println("An error occurred: " + e1.getMessage());
-}
-
-}
 public void amazonClick() {
-amazonLinkClick.click();
+	 WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+	 WebElement amazonLinkClick = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//span[text()='Shop online at Amazon India']")));		
+	 amazonLinkClick.click();
 	}
 }
+
